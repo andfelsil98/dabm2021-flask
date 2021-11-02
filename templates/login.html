@@ -4,16 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/flask/templates/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = styles.css) }}">
     <title>Ingreso al sistema</title>
+    <style>
+       
+    </style>
+
+    <script>
+        function boton(){
+        //     alert('Boton pulsado')
+        // }
+        usuario = document.getElementByName('usuario').value;   //del documento (en este caso HTML) seleccione el elemento que tiene el nombre usuario 
+        password = document.getElementByName('password').value;
+        if ((usuario == "") || (password == "")){
+            alert('Por favor ingrese todos los valores');
+        }
+        else{
+            document.getElementById('formLogin').submit();
+        }
+        }
+    </script>
 </head>
+
 <body>
     <div id="login">
         <form action="/validar" method="post"> 
             <img src="https://escuelaing.s3.amazonaws.com/staging/images/logo-ecijg.width-380.png?AWSAccessKeyId=AKIAWFY3NGTFBJGCIWME&Signature=COXSAJbmHpEjpoPP1%2BBizc0JJtU%3D&Expires=1636469474" alt="logo escuela">
-            <p>Usuario: <input type="text" name="usuario"></p>
-            <p>contraseña: <input type="password" name="password"></p>
-            <p><input type="submit" value="Ingresar"></p>
+            <p>Usuario: <input type="text" name="usuario" id="usuario"></p>
+            <p>contraseña: <input type="password" name="password" id="password"></p>
+            <p><input type="button" class="boton" value="Ingresar" onclick="boton()"></p>
         </form> 
     </div>
 </body>

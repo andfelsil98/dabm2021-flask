@@ -18,21 +18,23 @@ def validar(): ##MENSAJE QUE SE ENVIA al servidor para verificar informacion que
         usuario = request.form['usuario']
         password = request.form['password']
         resultado = verificar(usuario,password)
-        return resultado
+        # return resultado
+        return render_template('menu.html', title = 'Sistema DABM')
 
 def verificar(usuario,password):
-    file = open('C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/users.csv','r')
-    datos = file.readlines()
-    file.close()
-    for dato in datos:
-        dato = dato.replace('\n','')
-        us,contra = dato.split(';')
+    # file = open('C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/users.csv','r')
+    # datos = file.readlines()
+    # file.close()
+    # for dato in datos:
+    #     dato = dato.replace('\n','')
+    #     us,contra = dato.split(';')
         
-        if us == usuario and contra == password:
-            return 'Usuario autenticado exitosamente'
-        else:
-            print(usuario,password)
-            return 'Usuario no registrado'
+    #     if us == usuario and contra == password:
+    #         return 'Usuario autenticado exitosamente'
+    #     else:
+    #         print(usuario,password)
+    #         return 'Usuario no registrado'
+    return True
 
 
 if __name__ == '__main__':
