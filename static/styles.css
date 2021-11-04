@@ -8,8 +8,9 @@ html{
     font-size: 62.5%;
 }
 body{
-    background-color: green;
+    background-image: url('../static/fondo.jpg'); 
 }
+
 
 #login{
     border-style: solid;

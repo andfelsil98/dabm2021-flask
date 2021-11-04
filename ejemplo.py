@@ -1,5 +1,6 @@
 from flask import Flask,render_template,request
-
+import os 
+import random
 
 app = Flask(__name__)
 
@@ -20,6 +21,42 @@ def validar(): ##MENSAJE QUE SE ENVIA al servidor para verificar informacion que
         resultado = verificar(usuario,password)
         # return resultado
         return render_template('menu.html', title = 'Sistema DABM')
+
+@app.route('/monitor')
+def monitor():
+    #consultar archivo de parametros
+    datos = get_datos()
+    #print(datos)
+    #obtener lectura
+    lectura = random.randint(0,45)
+    #enviar a la interfaz
+    color = 0
+    if lectura >= int(datos[0][1]) and lectura <= int(datos[0][2]):
+        color = 1
+    if lectura >= int(datos[1][1]) and lectura <= int(datos[1][2]):
+        color = 2
+    if lectura >= int(datos[2][1]) and lectura <= int(datos[2][2]):
+        color = 3
+    return render_template('monitor.html', datos = datos, lectura = lectura, color=color)
+@app.route('/config')
+def config():
+    return render_template('config.html')
+
+def get_datos():
+    directorio = os.path.dirname(__file__)
+    nombre_archivo = 'bd/parametros.csv'
+    ruta = os.path.join(directorio, nombre_archivo)
+    f = open(ruta,'r')
+    lineas = f.readlines()
+    f.close()
+
+    datos = []
+
+    for l in lineas:
+        l = l.replace('\n','')
+        l = l.split(';')
+        datos.append(l)
+    return datos
 
 def verificar(usuario,password):
     # file = open('C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/users.csv','r')
