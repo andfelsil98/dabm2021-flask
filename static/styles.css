@@ -5,10 +5,10 @@
 }
 
 html{
-    font-size: 62.5;
+    font-size: 62.5%;
 }
 body{
-    background-color: lightblue;
+    background-color: green;
 }
 
 #login{
@@ -22,4 +22,8 @@ body{
     left: 35%;
     top: 30%;
     text-align: center;
+}
+
+body p{
+    margin-bottom: 1rem;
 }
