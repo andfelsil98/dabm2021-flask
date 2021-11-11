@@ -38,8 +38,17 @@ def monitor():
     if lectura >= int(datos[2][1]) and lectura <= int(datos[2][2]):
         color = 3
     return render_template('monitor.html', datos = datos, lectura = lectura, color=color)
-@app.route('/config')
-def config():
+
+@app.route('/config', methods=['GET','POST'])
+def config():  ##recibo los elementos que me envia el submit config 
+    if request.method == "POST":
+        min_hipo = request.form['minHipo'] 
+        max_hipo = request.form['maxHipo']
+        min_norm = request.form['minNorm']
+        max_norm = request.form['maxNorm']
+        min_fie = request.form['minFie']
+        max_fie = request.form['maxFie']
+        print(min_hipo,max_hipo,min_norm,max_norm,min_fie,max_fie)
     return render_template('config.html')
 
 def get_datos():

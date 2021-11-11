@@ -15,11 +15,29 @@
     
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function guardar(){
+            // min_hipo = document.getElementById("minHipo").value; 
+            // max_hipo = document.getElementById("maxHipo").value;
+            // min_norm = document.getElementById("minNorm").value;
+            // max_norm = document.getElementById("maxNorm").value;
+            // min_fie = document.getElementById("minFie").value;
+            // max_fie = document.getElementById("maxFie").value;
+            // alert(min_hipo,min_norm,min_fie)
+            // alert(max_hipo,max_norm,max_fie)
+            document.getElementById('formConfig').submit(); //toma los elementos y me los envia a la ruta action que yo puse en el form
+            // document.getElementById('formconfig').submit();
+        }
+    </script>
 </head>
 <body>
+<form action="/config" method="post" id="formConfig" > 
     <p>PARAMETROS DE CONFIGURACION</p>
     <br>
+
     <p>
+
     <table class="table">
         <thead> <!--table head-->
           <tr> <!--table record, la fila--> 
@@ -29,25 +47,27 @@
           </tr>
         </thead>
         <tbody> <!--table body-->
-             
+        
           <tr class="table-primary">
             <td>Hipotermia</td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" name="minHipo" id="minHipo"></td>
+            <td><input type="number" name="maxHipo" id= maxHipo></td>
           </tr>
           <tr class="table-success">
             <td>Normal</td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" name="minNorm" id="minNorm"></td>
+            <td><input type="number" name="maxNorm" id="maxNorm"></td>
           </tr>
           <tr class="table-danger">
             <td>Fiebre</td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" name="minFie" id="minFie"></td>
+            <td><input type="number" name="maxFie" id="maxFie"></td>
           </tr>
         </tbody>
       </table>
     </p>
-    <p><button type="button" class="btn btn-primary">Guardar</button></p>
+    
+    <p><button type="button" class="btn btn-primary" value="Guardar" onclick="guardar()">Guardar</button></p>
+</form> 
 </body>
 </html>
