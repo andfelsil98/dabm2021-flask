@@ -2,6 +2,53 @@ from flask import Flask,render_template,request
 import os 
 import random
 
+
+#################################################funciones#################################
+class temperatura:
+    def __init__(self,condicion,minimo,maximo):
+        self.condicion = condicion
+        self.minimo = int(minimo)
+        self.maximo = int(maximo)
+        self._file ='C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    
+    def save_to_file(self):
+        
+        file = open(self._file,'a')
+        datos = self.condicion + ';' + str(self.minimo) + ';' + str(self.maximo) + '\n'  
+        file.write(datos)
+        # print(datos)
+        file.close()
+        # datos_arduino()
+        
+
+def mod_info():
+    file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    f = open(file_sensores,'r')
+    datos_mod = f.readlines()
+    # print(datos_mod)
+
+    if not datos_mod:
+        t.save_to_file() 
+    else:
+
+        for d in datos_mod:
+            # print(d)
+            if name_range in d:
+                # print(d)
+                datos_mod.remove(d)
+                  
+         
+        datos_mod.append(name_range + ';' + str(minimo) + ';' + str(maximo) + '\n')
+        file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+        archivo = open(file_sensores,'w')
+        archivo.writelines(datos_mod)
+        archivo.close()
+        # input('Cambios guardados exitosamente')
+        # datos_arduino()
+        
+
+##############################################################################################
+
 app = Flask(__name__)
 
 @app.route('/')  ##le estoy diciendo a flask cuando el usuario entre a esta ruta ejecuta esta funcion
@@ -19,6 +66,7 @@ def validar(): ##MENSAJE QUE SE ENVIA al servidor para verificar informacion que
         usuario = request.form['usuario']
         password = request.form['password']
         resultado = verificar(usuario,password)
+        
         # return resultado
         return render_template('menu.html', title = 'Sistema DABM')
 
@@ -41,14 +89,28 @@ def monitor():
 
 @app.route('/config', methods=['GET','POST'])
 def config():  ##recibo los elementos que me envia el submit config 
+    global minimo
+    global maximo
+    global t
+    global name_range
     if request.method == "POST":
-        min_hipo = request.form['minHipo'] 
-        max_hipo = request.form['maxHipo']
-        min_norm = request.form['minNorm']
-        max_norm = request.form['maxNorm']
-        min_fie = request.form['minFie']
-        max_fie = request.form['maxFie']
-        print(min_hipo,max_hipo,min_norm,max_norm,min_fie,max_fie)
+        minimo= request.form['minHipo'] 
+        maximo = request.form['maxHipo']
+        name_range = 'hipotermia'
+        t = temperatura(name_range,minimo,maximo)
+        mod_info()
+        minimo = request.form['minNorm']
+        maximo = request.form['maxNorm']
+        name_range = 'normal'
+        t = temperatura(name_range,minimo,maximo)
+        mod_info()
+        minimo = request.form['minFie']
+        maximo = request.form['maxFie']
+        name_range = 'fiebre'
+        t = temperatura(name_range,minimo,maximo)
+        mod_info()
+
+        
     return render_template('config.html')
 
 def get_datos():
@@ -84,5 +146,5 @@ def verificar(usuario,password):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
     # validar()

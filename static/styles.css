@@ -13,17 +13,19 @@ body{
 
 
 #login{
-    border-style: solid;
+    /* border-style: solid;
     border-color: black;
-    border-width: thin;
+    border-width: thin; */
     padding: 10px;
-    width: 400px;
+    width: 100%;
+    height: 100vh;
     font-family: 'Courier New', Courier, monospace;
     position: absolute;
     left: 35%;
     top: 30%;
     text-align: center;
 }
+
 
 body p{
     margin-bottom: 1rem;
