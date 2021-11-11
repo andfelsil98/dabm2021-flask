@@ -9,20 +9,20 @@ class temperatura:
         self.condicion = condicion
         self.minimo = int(minimo)
         self.maximo = int(maximo)
-        self._file ='C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+        self._file = ruta
     
-    def save_to_file(self):
+    # def save_to_file(self):
         
-        file = open(self._file,'a')
-        datos = self.condicion + ';' + str(self.minimo) + ';' + str(self.maximo) + '\n'  
-        file.write(datos)
-        # print(datos)
-        file.close()
-        # datos_arduino()
+    #     file = open(self._file,'a')
+    #     datos = self.condicion + ';' + str(self.minimo) + ';' + str(self.maximo) + '\n'  
+    #     file.write(datos)
+    #     # print(datos)
+    #     file.close()
+    #     # datos_arduino()
         
 
 def mod_info():
-
+    global ruta
     directory = os.path.dirname(__file__)
     nombre_archivo = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
     ruta = os.path.join(directory, nombre_archivo)
@@ -36,25 +36,25 @@ def mod_info():
     datos_mod = f.readlines()
     # print(datos_mod)
 
-    if not datos_mod:
-        t.save_to_file() 
-    else:
+    # if not datos_mod:
+    #     t.save_to_file() 
+    # else:
 
-        for d in datos_mod:
+    for d in datos_mod:
+        # print(d)
+        if name_range in d:
             # print(d)
-            if name_range in d:
-                # print(d)
-                datos_mod.remove(d)
-                  
-         
-        datos_mod.append(name_range + ';' + str(minimo) + ';' + str(maximo) + '\n')
-        # file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
-        archivo = open(ruta,'w')
-        archivo.writelines(datos_mod)
-        archivo.close()
-        # input('Cambios guardados exitosamente')
-        # datos_arduino()
+            datos_mod.remove(d)
+                
         
+    datos_mod.append(name_range + ';' + str(minimo) + ';' + str(maximo) + '\n')
+    # file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    archivo = open(ruta,'w')
+    archivo.writelines(datos_mod)
+    archivo.close()
+    # input('Cambios guardados exitosamente')
+    # datos_arduino()
+    
 
 ##############################################################################################
 
