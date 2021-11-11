@@ -22,8 +22,17 @@ class temperatura:
         
 
 def mod_info():
-    file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
-    f = open(file_sensores,'r')
+
+    directory = os.path.dirname(__file__)
+    nombre_archivo = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    ruta = os.path.join(directory, nombre_archivo)
+    # f = open(ruta,'r')
+    # lineas = f.readlines()
+    # f.close()
+
+
+    # file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    f = open(ruta,'r')
     datos_mod = f.readlines()
     # print(datos_mod)
 
@@ -39,8 +48,8 @@ def mod_info():
                   
          
         datos_mod.append(name_range + ';' + str(minimo) + ';' + str(maximo) + '\n')
-        file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
-        archivo = open(file_sensores,'w')
+        # file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+        archivo = open(ruta,'w')
         archivo.writelines(datos_mod)
         archivo.close()
         # input('Cambios guardados exitosamente')
