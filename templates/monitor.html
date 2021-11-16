@@ -26,8 +26,9 @@
     <!-- {{ lectura }}
     {{ datos }} -->
     <p>
-        <h4>MONITOR DE TEMPERATURA</h4>
+        <h4 class="ml-4">MONITOR DE TEMPERATURA</h4>
     </p>
+    <p><button type="button" class="btn btn-danger ml-4" style="width: 100px;height: 50px;" value="Página anterior" onclick="history.go(-1);">volver</button></p>
         <br> <!--salto de linea-->
         <p>
         <table class="table">
@@ -58,9 +59,9 @@
             </tbody>
           </table>
         </p>
-        <p>Temperatura: {{ lecturas }}</p>
+        <p class="ml-4">Temperatura: {{ lecturas }}</p>
         <p>
-            <table>
+            <table class="ml-4">
                 <tr>
             {% for color in colores %}
                 {% if color == 1 %}

@@ -57,7 +57,7 @@ def datos():
     user = {'nombre' : 'david'}
     return render_template('datos.html',title='Titulo personalizado', user = user)
 
-@app.route('/validar', methods = ["POST"])   ###metodo get en la etiqueta form de html me sirve para capturar los datos y poder visualizarlos en el url, con el metodo post puedo guardar esos datos pero no visualizarlos en el url para mayor seguridad
+@app.route('/validar', methods = ["POST","GET"])   ###metodo get en la etiqueta form de html me sirve para capturar los datos y poder visualizarlos en el url, con el metodo post puedo guardar esos datos pero no visualizarlos en el url para mayor seguridad
 def validar(): ##MENSAJE QUE SE ENVIA al servidor para verificar informacion que captura se llama request
     if request.method == "POST":
         usuario = request.form['usuario']
@@ -149,6 +149,7 @@ def monitor():
         colores.append(color)
     print(colores)
     return render_template('monitor.html', datos = datos, lecturas = lecturas, colores=colores)
+
 @app.route('/config', methods=['GET','POST'])
 def config():  ##recibo los elementos que me envia el submit config 
     global minimo
