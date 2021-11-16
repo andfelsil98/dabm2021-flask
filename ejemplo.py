@@ -1,44 +1,32 @@
 from flask import Flask,render_template,request
 import os 
 import random
+import threading
+import datetime
+import time
 
-
+dato1 = 0
+dato2 = 0
+dato3 = 0
 #################################################funciones#################################
 class temperatura:
     def __init__(self,condicion,minimo,maximo):
         self.condicion = condicion
         self.minimo = int(minimo)
         self.maximo = int(maximo)
-        self._file = ruta
-    
-    # def save_to_file(self):
-        
-    #     file = open(self._file,'a')
-    #     datos = self.condicion + ';' + str(self.minimo) + ';' + str(self.maximo) + '\n'  
-    #     file.write(datos)
-    #     # print(datos)
-    #     file.close()
-    #     # datos_arduino()
         
 
 def mod_info():
     global ruta
     directory = os.path.dirname(__file__)
-    nombre_archivo = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    nombre_archivo = 'bd/parametros.csv'
     ruta = os.path.join(directory, nombre_archivo)
-    # f = open(ruta,'r')
-    # lineas = f.readlines()
-    # f.close()
 
 
-    # file_sensores = 'C:/Users/Administrador/Desktop/DABM PYTHONv2/flask/bd/parametros.csv'
+    
     f = open(ruta,'r')
     datos_mod = f.readlines()
-    # print(datos_mod)
 
-    # if not datos_mod:
-    #     t.save_to_file() 
-    # else:
 
     for d in datos_mod:
         # print(d)
@@ -79,23 +67,88 @@ def validar(): ##MENSAJE QUE SE ENVIA al servidor para verificar informacion que
         # return resultado
         return render_template('menu.html', title = 'Sistema DABM')
 
+def sensor1():
+    global dato1
+    dato1 = random.randint(20,45)
+    hora = datetime.datetime.now()
+    registro = str(dato1) + ';' + str(hora) + '\n'
+    print(registro)
+    time.sleep(1)
+
+    directorio = os.path.dirname(__file__)
+    archivo = './bd/sensor1.csv'
+    storage = os.path.join(directorio , archivo)
+
+    f = open(storage, 'a')
+    f.write(registro)
+    f.close()
+
+def sensor2():
+    global dato2
+    dato2 = random.randint(20,45)
+    hora = datetime.datetime.now()
+    registro = str(dato1) + ';' + str(hora) + '\n'
+    print(registro)
+    time.sleep(1)
+
+    directorio = os.path.dirname(__file__)
+    archivo = './bd/sensor2.csv'
+    storage = os.path.join(directorio , archivo)
+
+    f = open(storage, 'a')
+    f.write(registro)
+    f.close()
+
+def sensor3():
+    global dato3
+    dato3 = random.randint(20,45)
+    hora = datetime.datetime.now()
+    registro = str(dato1) + ';' + str(hora) + '\n'
+    print(registro)
+    time.sleep(1)
+
+    directorio = os.path.dirname(__file__)
+    archivo = './bd/sensor3.csv'
+    storage = os.path.join(directorio , archivo)
+
+    f = open(storage, 'a')
+    f.write(registro)
+    f.close()
+
+
+
+
 @app.route('/monitor')
 def monitor():
+
+    h1 = threading.Thread(target = sensor1)
+    h1.daemon = True  ##sirve para que cuando mi funcion termine de ejecutar lo que tiene que hacer se cierre automaticamente
+    h2 = threading.Thread(target = sensor2)
+    h2.daemon = True
+    h3 = threading.Thread(target = sensor3)
+    h3.daemon = True
+
+    h1.start()
+    h2.start()
+    h3.start()
     #consultar archivo de parametros
     datos = get_datos()
     #print(datos)
     #obtener lectura
-    lectura = random.randint(0,45)
-    #enviar a la interfaz
-    color = 0
-    if lectura >= int(datos[0][1]) and lectura <= int(datos[0][2]):
-        color = 1
-    if lectura >= int(datos[1][1]) and lectura <= int(datos[1][2]):
-        color = 2
-    if lectura >= int(datos[2][1]) and lectura <= int(datos[2][2]):
-        color = 3
-    return render_template('monitor.html', datos = datos, lectura = lectura, color=color)
+    lecturas = [dato1,dato2,dato3]
 
+    colores = []
+    for lectura in lecturas:
+        color = 0
+        if lectura >= int(datos[0][1]) and lectura <= int(datos[0][2]):
+            color = 1
+        if lectura >= int(datos[1][1]) and lectura <= int(datos[1][2]):
+            color = 2
+        if lectura >= int(datos[2][1]) and lectura <= int(datos[2][2]):
+            color = 3
+        colores.append(color)
+    print(colores)
+    return render_template('monitor.html', datos = datos, lecturas = lecturas, colores=colores)
 @app.route('/config', methods=['GET','POST'])
 def config():  ##recibo los elementos que me envia el submit config 
     global minimo

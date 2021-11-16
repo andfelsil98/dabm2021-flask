@@ -58,13 +58,29 @@
             </tbody>
           </table>
         </p>
-        <p>Temperatura: {{ lectura }}</p>
-        <p>{% if color == 1 %}
-            <div style="width: 500px;height: 500px;background-color: lightblue;"></div>{% endif %}
-            {% if color == 2 %}
-            <div style="width: 500px;height: 500px;background-color: lightgreen;"></div>{% endif %}
-            {% if color == 3 %}
-            <div style="width: 500px;height: 500px;background-color: red;"></div>{% endif %}
+        <p>Temperatura: {{ lecturas }}</p>
+        <p>
+            <table>
+                <tr>
+            {% for color in colores %}
+                {% if color == 1 %}
+                <td>
+                  <div style="width: 50px;height: 50px;background-color: lightblue;"></div>
+                </td>
+                {% endif %}
+                {% if color == 2 %}
+                <td>
+                  <div style="width: 50px;height: 50px;background-color: lightgreen;"></div>
+                </td>
+                {% endif %}
+                {% if color == 3 %}
+                <td>
+                  <div style="width: 50px;height: 50px;background-color: red;"></div>
+                </td>
+                {% endif %}
+            {% endfor %}
+                </tr>
+            </table>
         </p>
     
 </body>
